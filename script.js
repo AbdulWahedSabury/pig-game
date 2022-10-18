@@ -1,5 +1,8 @@
 'use strict';
 // select Elements
+const player0El = document.querySelector('.player--0');
+const player1El = document.querySelector('.player--1');
+
 const score0El = document.querySelector('#score--0');
 const score1El = document.querySelector('#score--1');
 
@@ -10,25 +13,30 @@ const dice = document.querySelector('.dice');
 const btnNew = document.querySelector('.btn--new');
 const btnHold = document.querySelector('.btn--hold');
 const btnRoll = document.querySelector('.btn--roll');
+
 // starting conditions
 dice.classList.add('hidden');
 score0El.textContent = 0;
 score1El.textContent = 0;
 
 let courentNumber = 0;
+let activePlayer = 0;
 // dice role functionality
 btnRoll.addEventListener('click', function () {
   // generate random roll
   let score = Math.trunc(Math.random() * 6) + 1;
-  console.log(score);
   dice.classList.remove('hidden');
   // display roll
   dice.src = `dice-${score}.png`;
   courentNumber += score;
-
-  if(score !== 1){
-    courent0El.textContent = courentNumber;
-  }else{
-
+  // check if score is 1 or no
+  if (score !== 1) {
+    document.getElementById(`current--${activePlayer}`).textContent = courentNumber;
+  } else {
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    courentNumber = 0;
+    activePlayer = (activePlayer === 0) ? 1 : 0;
+    player0El.classList.toggle('player--active');
+    player1El.classList.toggle('player--active');
   }
 });
